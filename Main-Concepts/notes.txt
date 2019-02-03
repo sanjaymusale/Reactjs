@@ -1,0 +1,9 @@
+props in class compomnent is made available via this.props  
+
+to update the state we must use amethod  called as setState
+setState method takes a function as argument
+for that function previous state value will be passed as an argument
+the set state method should return the updated state value set
+after the state is updated via the setState method,
+
+controlled components - the input fields value must be kept in state

@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>
+
+    </title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type='text/babel'>
+
+
+
+            const rootHandle = document.getElementById("root")
+            //user defined tag for html
+            //component - function
+
+           function Product(data) {
+               //funtion or method must return only 1 element
+
+               return (
+                   <div>
+                <h2> {data.name} </h2>
+                <p> {data.price} - {data.category}</p>
+                <button onClick={() => console.log(`product with id added to cart`, data.id)}>
+                    Add to cart
+                       </button>
+            </div>
+            )
+        }
+        const products = [
+               {id: 1, name: 'marker', price: 10, category: 'stationary' },
+               {id: 2, name: 'marker2', price: 15, category: 'stationary' },
+               {id: 3, name: 'marker3', price: 100, category: 'stati' }
+           ]
+           const ele = (
+               //each
+               <div>
+                {products.map(product => {
+                    return <Product id={product.id} name={product.name} price={product.price} category={product.category} />
+                })}
+            </div>
+            )
+
+
+            ReactDOM.render(ele, rootHandle) //1 arg)what is particular we want to put in browser 2 arg)where you want to put
+       </script>
+
+
+
+
+
+</body>
+
+
+</html>
