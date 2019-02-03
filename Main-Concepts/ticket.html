@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Ticket Master</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+
+        class App extends React.Component {
+            constructor() {
+                super()
+                this.state = {
+                     tickets : [
+                           {code:'dct123',name:'sanjay',department:'technical',status:'open',message:'net is slow',priority:'high'}
+
+                        ],
+                        //controlled components - input fields value must be kept in state
+                        code:'',
+                        name:'',
+                        department:'',
+                        message:'',
+                        priority:'',
+                        status:''
+                }   
+                    
+                
+            }
+
+            handleSubmit = (event)=>{
+                event.preventDefault()
+                const formData = {
+                    code : event.target.code.value,
+                    name : event.target.name.value,
+                    department : event.target.department.value,
+                    priority : event.target.priority.value,
+                    message : event.target.message.value,
+                    status : 'open'
+                }
+
+                
+                this.setState((prevState)=>{
+                   return { 
+                      tickets : prevState.tickets.concat(formData),
+                      code:'',
+                      name:'',
+                      department:'',
+                      priority:'',
+                      message:'',
+
+
+                }
+            })
+            }
+
+
+            handleCodeSubmit = (event)=>{
+                const code = event.target.value
+                this.setState(()=> ({code}) )
+            }
+            
+            handleNameSubmit = (event)=>{
+                const name = event.target.value
+                this.setState(()=> ({name}) )
+            }
+
+            handleDepartmentSubmit = (event)=>{
+                const department = event.target.value
+                this.setState(()=> ({department}) )
+            }
+
+            handlePrioritySubmit = (event)=>{
+                const priority = event.target.value
+                this.setState(()=> ({priority}) )
+            }
+
+            handleMessageSubmit = (event)=>{
+                const message = event.target.value
+                this.setState(()=> ({message}) )
+            }
+
+
+
+            render() {
+                return (
+                    <div>
+                        <h2>Ticket Master</h2>
+                        <h3>Ticket Listing - {this.state.tickets.length}</h3>
+
+                        <table border='1'>
+                            <thead>
+                            <tr>
+                            <th>code</th>
+                            <th>name</th>
+                            <th>department</th>
+                            <th>message</th>
+                            <th>priority</th>
+                            <th>status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            { this.state.tickets.map((ticket)=>{
+                                return (
+                                    <tr key={ticket.code}>
+                                    <td>{ticket.code}</td>
+                                    <td>{ticket.name}</td>
+                                    <td>{ticket.department}</td>
+                                    <td>{ticket.message}</td>
+                                    <td>{ticket.priority}</td>
+                                    <td>{ticket.status}</td>
+                                    </tr>
+                                )
+                            })}
+                            </tbody>
+                        </table>
+                        <br/>
+
+                        <h2>Add Tickets</h2>
+
+
+                        <form onSubmit={this.handleSubmit}>
+                            <label>
+                                Code :
+                            <input type="text" name="code" value={this.state.code} onChange={this.handleCodeSubmit} />
+                             </label><br/>
+
+                             <label>
+                                Name :
+                            <input type="text" name="name" value={this.state.name}  onChange={this.handleNameSubmit}/>
+                             </label><br/>
+
+                             <label>
+                                Depart :
+                                <select name="department" value={this.state.department} onChange={this.handleDepartmentSubmit}>
+                                    <option value="">Select</option>
+                                     <option value="Sales">Sales</option>
+                                     <option value="Technical">Technical</option>
+                                      <option value="HR">HR</option>
+                                      </select>
+                             </label><br/>
+                             
+                             <label>
+                                Priority :
+                                <input type="radio" name="priority" value="Low" value={this.state.priority}  onChange={this.handlePrioritySubmit}/>Low
+
+                                <input type="radio" name="priority" value="Mid" value={this.state.priority} onChange={this.handlePrioritySubmit} />Mid
+
+                                <input type="radio" name="priority" value="High" value={this.state.priority} onChange={this.handlePrioritySubmit} />High
+
+                             </label><br/>
+
+                             <label>
+                                Message:
+                                <textarea name="message" value={this.state.message} onChange={this.handleMessageSubmit}></textarea>
+                                </label>
+                                <br/>
+                                <input type="submit" value="submit" />
+                         </form>   
+
+                    </div>
+                    
+
+
+                )
+            }
+        
+        }
+        ReactDOM.render(<App />, rootHandle)
+
+    </script>
+</body>
+
+</html>
