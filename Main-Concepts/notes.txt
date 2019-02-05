@@ -7,3 +7,7 @@ the set state method should return the updated state value set
 after the state is updated via the setState method,
 
 controlled components - the input fields value must be kept in state
+
+
+
+//When the state is maintained in the parent, and the change of values to the state will be from the child (ex like delete, or submit , events), the child cannot directly update the state value, because of uni directional data flow of react,for updating the state value we have a method defined in the parent and passed down as a prop to the child. when an event occurs, the method which is passed as a prop to the child will be invoked in the child component 

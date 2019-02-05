@@ -16,7 +16,67 @@
     <script type="text/babel">
         const rootHandle = document.getElementById('root')
        
-        ReactDOM.render(ele, rootHandle)
+       class App extends React.Component{
+           constructor(){
+               super()
+               this.state = {
+                   users : [
+                       { id:1,name:"ramesh"},
+                       { id:2,name:"suresh"},
+                       { id:3,name:"lokesh"}
+                   ],
+                    products : [
+                       { id:1,name:"marker"},
+                       { id:2,name:"scale"},
+                       { id:3,name:"board"}
+                   ]
+               }
+           }
+
+
+           
+           render(){
+                 return (
+                <div>
+                <h2>Listing User - {this.state.users.length}</h2>
+                    <TableComponent data={this.state.users} />
+                  <h2>Listing Product - {this.state.products.length}</h2>
+                    <TableComponent data={this.state.products} />  
+                </div>
+               )
+           }
+       } 
+
+       // valid component name should be PascalCase
+       // it has props as parameter
+       // it will return JSX
+
+       function TableComponent(props){
+           return (
+                <table>
+                        <thead>
+                            <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                        {props.data.map((value)=>{
+                            return (
+                                <tr key={value.id}>
+                                <td>{value.id}</td>
+                                <td>{value.name}</td>
+                                </tr>
+                            )
+                        })}
+                        </tbody>
+
+                    </table>
+           )
+
+       }
+        ReactDOM.render(<App />, rootHandle)
     </script>
 </body>
 
