@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <title>Hello world</title>
+  <script src="https://api.mqcdn.com/sdk/mapquest-gl-js/v0.4.0/mapquest-gl.js"></script>
+  <link type="text/css" rel="stylesheet" href="https://api.mqcdn.com/sdk/mapquest-gl-js/v0.4.0/mapquest-gl.css" />
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="./js/react.development.js"></script>
+  <script src="./js/react-dom.development.js"></script>
+  <script src="./js/babel.js"></script>
+  <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+
+      class App extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            longitude: null,
+            latitude: null,
+            temperature:null
+          };
+        }
+
+        getLocation = () => {
+          // console.log('inside getlocation')
+          
+            // console.log('inside if')
+            navigator.geolocation.getCurrentPosition((position)=>{
+               
+            this.setState(prevState => ({
+            longitude: position.coords.longitude,
+            latitude: position.coords.latitude
+
+          }));
+              
+               fetch(`https://api.darksky.net/forecast/3213e9d1517fa934045824533c25e0b5/${this.state.latitude},${this.state.longitude}`)
+                .then(response => response.json())
+                .then(data => {
+                  let celsius = (5/9) * (data.currently.temperature-32)
+                  this.setState(prevState => ({ temperature : celsius}))
+                })
+
+  
+        
+               
+            })  
+          
+        }
+
+       
+
+        
+        
+
+        render() {
+          return (
+            <div>
+              <button
+                onClick={() => {
+                  this.getLocation();
+                }}
+              >
+                GET MY LOCATION
+              </button>
+              <br/>
+             { this.state.latitude &&  <ShowTemperature state={this.state}/> }
+              <MapLocation latitude={this.state.latitude} longitude={this.state.longitude} />
+            </div>
+          );
+        }
+      }
+
+      function ShowTemperature(props){
+        return (
+          <div>
+          <h3>
+                Your longitude is {props.state.longitude} and latitude is 
+                {props.state.latitude}
+              </h3><br />
+              <h3>Current temperature is {props.state.temperature}</h3>
+          </div>
+        )
+      }
+
+      function MapLocation(props){
+        console.log(props)
+        if(props.latitude !== null && props.longitude !== null){
+          return (
+            <div>
+               <img src={`https://www.mapquestapi.com/staticmap/v5/map?key=Ni7T8vYGmoEupAOiY6auA43o8LObW8xE&locations=${props.latitude},${props.longitude}&size=500,500@2x`} />
+            </div>
+          )
+        }
+        else{
+          return (
+            <div></div>
+          )
+        }
+      }
+
+
+      
+
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+</body>
+
+</html>
