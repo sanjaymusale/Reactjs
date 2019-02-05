@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Hello world</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+
+      class Users extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            users: [
+              { id: 1, name: "ramesh" },
+              { id: 2, name: "suresh" },
+              { id: 3, name: "mahesh" }
+            ]
+          };
+        }
+
+        handleDelete = id => {
+          this.setState(prevState => ({
+            users: prevState.users.filter(user => user.id !== id)
+          }));
+        };
+
+        render() {
+          return (
+            <div>
+              <h2>Listing Users - {this.state.users.length} </h2>
+              <ul>
+                {this.state.users.map(user => {
+                  return (
+                    <UserList
+                      key={user.id}
+                      id={user.id}
+                      name={user.name}
+                      handleDelete={this.handleDelete}
+                    />
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        }
+      }
+
+      function UserList(props) {
+        return (
+          <li key={props.id}>
+            {props.name}
+            <button
+              onClick={() => {
+                const confirm = window.confirm("Are You Sure");
+                if (confirm) {
+                  props.handleDelete(props.id);
+                }
+              }}
+            >
+              Delete
+            </button>
+          </li>
+        );
+      }
+
+      ReactDOM.render(<Users />, rootHandle);
+    </script>
+  </body>
+</html>
