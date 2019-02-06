@@ -11,3 +11,17 @@ controlled components - the input fields value must be kept in state
 
 
 //When the state is maintained in the parent, and the change of values to the state will be from the child (ex like delete, or submit , events), the child cannot directly update the state value, because of uni directional data flow of react,for updating the state value we have a method defined in the parent and passed down as a prop to the child. when an event occurs, the method which is passed as a prop to the child will be invoked in the child component 
+
+
+facebook provide react library "create-react-app" we need to install it as npm package that is 
+
+npm install -g create-react-app
+
+to create a project of react then run this command at start
+
+create-react-app project_name
+create-react-app ticket-master
+
+npm start => to run the server
+
+hot reload feature => it will automatically reload if any changes in the file app.js
