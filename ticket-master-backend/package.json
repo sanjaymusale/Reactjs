@@ -1,0 +1,17 @@
+{
+  "name": "ticket-master-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.10",
+    "validator": "^10.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

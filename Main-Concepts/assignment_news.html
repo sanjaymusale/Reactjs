@@ -34,37 +34,22 @@
             }
 
             componentDidMount(){
-                console.log('inside component')
-                console.log(this.state.selectedCategory)
+                this.callingAPi(this.state.selectedCategory)
+            }
 
-                fetch(`https://newsapi.org/v2/everything?q=${this.state.selectedCategory === 'Select' ? 'Sports' : this.state.selectedCategory }&apiKey=0cd350599ca049b3b815aafed44c174c`)
+            callingAPi = (selectedCategory)=>{
+
+                 fetch(`https://newsapi.org/v2/everything?q=${selectedCategory === 'Select' ? 'Sports' : selectedCategory }&apiKey=0cd350599ca049b3b815aafed44c174c`)
                 .then(response => response.json())
-                .then(data => {this.setState(()=>({newsData : data}))
-                console.log('after fetch component',data)
-                console.dir('after component state',this.state.newsData)
-                
-                })
+                .then(data => {this.setState(()=>({newsData : data})) })
                 .catch((err)=>{console.log(err  )})
             }
 
             changeCategory=(event)=>{
                 let selectedCategory = event.target.value
-                this.setState(()=>({selectedCategory}),()=>{
-                 fetch(`https://newsapi.org/v2/everything?q=${this.state.selectedCategory}&apiKey=0cd350599ca049b3b815aafed44c174c`)
-                .then(response => response.json())
-                .then(data => {this.setState(()=>(
-                    {
-                        newsData : data,
-                        
-                        }))
-                
+                this.setState(()=>({selectedCategory}),()=>{  
+                    this.callingAPi(this.state.selectedCategory)           
                 })
-                .catch((err)=>{console.log(err  )})
-                })
-                
-                
-            
-                
             }
             render(){
                 console.log('inside render')
