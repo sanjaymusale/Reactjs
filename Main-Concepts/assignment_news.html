@@ -39,7 +39,7 @@
 
             callingAPi = (selectedCategory)=>{
 
-                 fetch(`https://newsapi.org/v2/everything?q=${selectedCategory === 'Select' ? 'Sports' : selectedCategory }&apiKey=0cd350599ca049b3b815aafed44c174c`)
+                 fetch(`https://newsapi.org/v2/everything?q=${selectedCategory === 'Select' ? 'Sports' : selectedCategory }&apiKey=key`)
                 .then(response => response.json())
                 .then(data => {this.setState(()=>({newsData : data})) })
                 .catch((err)=>{console.log(err  )})

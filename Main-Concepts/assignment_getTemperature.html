@@ -38,7 +38,7 @@
 
           }));
               
-               fetch(`https://api.darksky.net/forecast/3213e9d1517fa934045824533c25e0b5/${this.state.latitude},${this.state.longitude}`)
+               fetch(`https://api.darksky.net/forecast/key/${this.state.latitude},${this.state.longitude}`)
                 .then(response => response.json())
                 .then(data => {
                   let celsius = (5/9) * (data.currently.temperature-32)

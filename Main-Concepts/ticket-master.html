@@ -34,7 +34,7 @@
                 
             }
                 componentDidMount(){
-                fetch('http://dct-api-data.herokuapp.com/tickets?api_key=671a7695f19b162f')
+                fetch('http://dct-api-data.herokuapp.com/tickets?api_key=key')
                 .then(response => response.json())
                 .then(data => this.setState(()=> ({ tickets : data }) ))
             }
