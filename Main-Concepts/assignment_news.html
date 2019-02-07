@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Hello world</title>
+    <script type="text/css" src="assignment_news.css"></script>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+        
+        class App extends React.Component{
+            constructor(){
+                console.log("inside constructor")
+                super()
+                this.state={
+                    categoryList : ['Sports','Entertainment','Crime','Weather','Politics','Movies','Cricket'],
+                     selectedCategory:'Select',
+                     newsData : null
+                }
+               
+            }
+            componentDidUpdate(){
+                
+            }
+
+            componentDidMount(){
+                console.log('inside component')
+                console.log(this.state.selectedCategory)
+
+                fetch(`https://newsapi.org/v2/everything?q=${this.state.selectedCategory === 'Select' ? 'Sports' : this.state.selectedCategory }&apiKey=0cd350599ca049b3b815aafed44c174c`)
+                .then(response => response.json())
+                .then(data => {this.setState(()=>({newsData : data}))
+                console.log('after fetch component',data)
+                console.dir('after component state',this.state.newsData)
+                
+                })
+                .catch((err)=>{console.log(err  )})
+            }
+
+            changeCategory=(event)=>{
+                let selectedCategory = event.target.value
+                this.setState(()=>({selectedCategory}),()=>{
+                 fetch(`https://newsapi.org/v2/everything?q=${this.state.selectedCategory}&apiKey=0cd350599ca049b3b815aafed44c174c`)
+                .then(response => response.json())
+                .then(data => {this.setState(()=>(
+                    {
+                        newsData : data,
+                        
+                        }))
+                
+                })
+                .catch((err)=>{console.log(err  )})
+                })
+                
+                
+            
+                
+            }
+            render(){
+                console.log('inside render')
+                return (
+
+                    <div width="100px">
+                    
+                    <select name="category" value={this.state.selectedCategory == 'Select' ? 'Sports' : this.state.selectedCategory } onChange={this.changeCategory}>
+                     <option value="">Select</option>
+                         {this.state.categoryList.sort().map((c,i)=>{
+                            return(
+                         <option key={i} value={c}>{c}</option>
+                    )
+                })}
+                </select>
+                <h1>{this.state.selectedCategory == 'Select' ? 'Sports' : this.state.selectedCategory} NEWS</h1>
+                <div float="left">
+                {this.state.newsData !== null && <Display info={this.state.newsData}  /> }
+                    </div>
+                    </div>
+                )
+                
+            }
+        }
+
+        function Display(props){
+         
+         return(
+             <table width="700px">
+             <tbody>
+             {props.info.articles.map((news,i)=>{
+            return(
+                <tr key={i}>
+                    <td> <img src={news.urlToImage} width="200px" height="200px" /></td>
+                    <td>
+                    <h2>{news.title}</h2><br/>
+                    <p>{news.description} <i><a href={news.url} target="blank">click here to read more</a></i></p>
+                    <p>published at : <i>{news.publishedAt}</i></p>
+                    </td>
+                </tr>
+            )
+             })}
+             </tbody>
+             </table>
+            
+         )
+
+         }         
+        
+
+       
+        ReactDOM.render(<App />, rootHandle)
+    </script>
+</body>
+
+</html>
+
+<!-- <div className="row">
+    {props.info.articles.map((news,i)=>{
+    return(
+    <div key={i} className="column">
+        <div className="card">
+            <span> <img src={news.urlToImage} width="100px" height="100px" /></span>
+            <p>{news.title}</p>
+            <p>{news.description} <i><a href={news.url} target="blank">click here to read more</a></i></p>
+            <p>{news.publishedAt}</p>
+        </div>
+    </div>
+    )
+
+
+    })}
+</div> -->

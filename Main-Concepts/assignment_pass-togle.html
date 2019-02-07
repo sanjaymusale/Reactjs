@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Hello world</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root')
+        
+        class App extends React.Component{
+            constructor(){
+                super()
+                this.state = {
+                    toggle : false
+                }
+            }
+            render(){
+                return(
+                <div>
+                <h1>FORM</h1>
+                <form>
+                <label>Username:
+                <input type="text" name="username" />
+                </label>
+                <br />
+                { this.state.toggle == false ? <InputPassword type="password"/> : <InputPassword type="text" /> }
+                <br />
+                <input type="checkbox" name="toggle" onChange={this.showpass}/>Toggle Password
+                <br/>
+                <input type="submit" /> 
+                </form>
+                </div>
+                )
+            }
+
+            showpass =(event)=>{
+                let checked = event.target.checked
+                this.setState((prevstate)=>({ toggle : checked}))
+
+                }
+            }
+        
+
+        function InputPassword(props){
+            return (
+                <label>Password
+                <input type={props.type} name="Password"  />
+                </label>
+            )
+        }
+
+       
+        ReactDOM.render(<App />, rootHandle)
+    </script>
+</body>
+
+</html>
